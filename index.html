@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dividi Mance 💰</title>
+<title>Dividi Mance nel Gruppo 💰</title>
 <style>
 * { box-sizing: border-box; margin:0; padding:0; }
 body {
@@ -17,9 +17,9 @@ body {
     color: #333;
 }
 .container {
-    background: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.95);
     backdrop-filter: blur(10px);
-    padding: 25px 30px;
+    padding: 30px;
     border-radius: 25px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     width: 100%;
@@ -39,7 +39,6 @@ input {
     border: 1px solid #ccc;
     font-size: 16px;
     margin-bottom: 15px;
-    transition: border-color 0.2s;
 }
 input:focus { border-color: #25d366; outline: none; }
 button {
@@ -48,54 +47,65 @@ button {
     font-size: 18px;
     border-radius: 20px;
     border: none;
-    background: rgba(37,211,102,0.85);
+    background: #25d366;
     color: white;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
     margin-bottom: 15px;
 }
-button:hover { background: rgba(29,168,81,0.95); transform: scale(1.03); }
-#citazione { font-style: italic; color: #555; text-align: center; margin: 20px 0; font-size: 14px; }
+button:hover { background: #1da851; transform: scale(1.03); }
+#citazione { 
+    font-style: italic; 
+    color: #555; 
+    text-align: center; 
+    margin: 20px 0; 
+    font-size: 14px; 
+}
 textarea {
     width: 100%;
-    height: 200px;
+    height: 220px;
     border-radius: 20px;
     border: 1px solid #ccc;
     padding: 12px;
     font-size: 16px;
     resize: none;
-    background: rgba(249,249,249,0.9);
+    background: rgba(249,249,249,0.95);
     margin-bottom: 10px;
+    white-space: pre-wrap;
 }
 </style>
 </head>
 <body>
 
 <div class="container">
-<h1>Dividi Mance 💰</h1>
+<h1>Dividi Mance nel Gruppo 💰</h1>
 
 <label for="totale">Importo totale (€):</label>
 <input type="number" id="totale" placeholder="Es. 120">
 
 <div id="citazione">"Si diceva in un contesto di servizio che, per il cassiere, l'eroe non esiste, ma la sua fatica è evidente."</div>
 
-<button onclick="inviaWhatsApp()">Invia Messaggio a Tutti</button>
+<button onclick="inviaAlGruppo()">Invia al Gruppo</button>
 
 <textarea id="messaggio" readonly placeholder="Messaggio generato..."></textarea>
 </div>
 
 <script>
+// Membri e relative emoji personalizzate
 const persone = [
-  {nome:"Andrea", numero:"393314392392"},
-  {nome:"Gaetano", numero:"393313931974"},
-  {nome:"Margen", numero:"393405426211"},
-  {nome:"Simone", numero:"393408674747"},
-  {nome:"Manuela", numero:"393880969941"},
-  {nome:"Dmitri", numero:"393891941328"}
+  {nome: "Andrea", emoji: "🧑‍💼"},
+  {nome: "Gaetano", emoji: "👨‍💼"},
+  {nome: "Margen", emoji: "👩‍💼"},
+  {nome: "Simone", emoji: "🧑‍💻"},
+  {nome: "Manuela", emoji: "👩‍💻"},
+  {nome: "Dmitri", emoji: "🧑‍🔧"}
 ];
 
-function inviaWhatsApp(){
+// Link del gruppo WhatsApp
+const gruppoLink = "https://chat.whatsapp.com/LukOoesFaBBEWtcWL2rNd7";
+
+function inviaAlGruppo(){
     const totale = parseFloat(document.getElementById('totale').value);
     if(!totale){
         alert('Inserisci un totale valido.');
@@ -104,20 +114,22 @@ function inviaWhatsApp(){
 
     const importo = (totale/persone.length).toFixed(2);
 
-    let messaggio = `💰 Mancia totale: €${totale}\n`;
-    messaggio += `"Si diceva in un contesto di servizio che, per il cassiere, l'eroe non esiste, ma la sua fatica è evidente."\n\n`;
+    // Messaggio elegante con emoji e separazioni
+    let messaggio = `📢 *Mancia Totale: €${totale}*\n`;
+    messaggio += `_"Si diceva in un contesto di servizio che, per il cassiere, l'eroe non esiste, ma la sua fatica è evidente."_ \n\n`;
+    messaggio += `💸 *Divisione tra i membri:*\n`;
 
-    persone.forEach(p=>{
-        messaggio += `${p.nome}: €${importo}\n`;
+    persone.forEach((p, i)=>{
+        messaggio += `🔹 ${p.emoji} ${p.nome} → €${importo}\n`;
     });
+
+    messaggio += `\n✅ Buon lavoro a tutti!`;
 
     document.getElementById('messaggio').value = messaggio;
 
-    // Apri WhatsApp per tutti i numeri (ogni numero in una scheda separata)
-    persone.forEach(p=>{
-        const url = `https://wa.me/${p.numero}?text=${encodeURIComponent(messaggio)}`;
-        window.open(url,'_blank');
-    });
+    // Apri WhatsApp per il gruppo tramite link di invito
+    const url = `${gruppoLink}?text=${encodeURIComponent(messaggio)}`;
+    window.open(url,'_blank');
 }
 </script>
 
