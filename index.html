@@ -5,13 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dividi Mance 💰</title>
 <style>
-/* Reset base */
 * { box-sizing: border-box; margin:0; padding:0; }
 body {
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    background: linear-gradient(160deg, #d9f0f0, #ffffff);
+    background: linear-gradient(135deg, #d9f0f0, #a8e0d8);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
     padding: 20px;
     color: #333;
+}
+.container {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(10px);
+    padding: 25px 30px;
+    border-radius: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 500px;
 }
 h1 {
     text-align: center;
@@ -19,86 +31,61 @@ h1 {
     font-size: 28px;
     margin-bottom: 20px;
 }
-.box {
-    background: #fff;
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-    max-width: 500px;
-    margin: 0 auto 30px auto;
-}
-label {
-    font-weight: 600;
-    display: block;
-    margin-bottom: 6px;
-    color: #075e54;
-}
+label { font-weight: 600; display: block; margin-bottom: 6px; color: #075e54; }
 input {
     width: 100%;
     padding: 14px;
-    border-radius: 12px;
+    border-radius: 16px;
     border: 1px solid #ccc;
     font-size: 16px;
     margin-bottom: 15px;
     transition: border-color 0.2s;
 }
-input:focus {
-    border-color: #25d366;
-    outline: none;
-}
+input:focus { border-color: #25d366; outline: none; }
 button {
     width: 100%;
     padding: 16px;
     font-size: 18px;
-    border-radius: 16px;
+    border-radius: 20px;
     border: none;
-    background: #25d366;
+    background: rgba(37,211,102,0.85);
     color: white;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s, transform 0.1s;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
 }
-button:hover {
-    background: #1da851;
-    transform: translateY(-2px);
-}
-#citazione {
-    font-style: italic;
-    color: #555;
-    text-align: center;
-    margin: 20px 0;
-    font-size: 14px;
-}
+button:hover { background: rgba(29,168,81,0.95); transform: scale(1.03); }
+#citazione { font-style: italic; color: #555; text-align: center; margin: 20px 0; font-size: 14px; }
 textarea {
     width: 100%;
-    height: 180px;
-    border-radius: 16px;
+    height: 200px;
+    border-radius: 20px;
     border: 1px solid #ccc;
     padding: 12px;
     font-size: 16px;
     resize: none;
-    background: #f9f9f9;
-    margin-top: 15px;
+    background: rgba(249,249,249,0.9);
+    margin-bottom: 10px;
 }
 </style>
 </head>
 <body>
 
+<div class="container">
 <h1>Dividi Mance 💰</h1>
 
-<div class="box">
 <label for="totale">Importo totale (€):</label>
 <input type="number" id="totale" placeholder="Es. 120">
 
 <div id="citazione">"Si diceva in un contesto di servizio che, per il cassiere, l'eroe non esiste, ma la sua fatica è evidente."</div>
 
-<button onclick="inviaMance()">Genera Messaggio WhatsApp</button>
+<button onclick="inviaWhatsApp()">Invia Messaggio a Tutti</button>
 
 <textarea id="messaggio" readonly placeholder="Messaggio generato..."></textarea>
 </div>
 
 <script>
-// Contatti preimpostati
 const persone = [
   {nome:"Andrea", numero:"393314392392"},
   {nome:"Gaetano", numero:"393313931974"},
@@ -108,7 +95,7 @@ const persone = [
   {nome:"Dmitri", numero:"393891941328"}
 ];
 
-function inviaMance(){
+function inviaWhatsApp(){
     const totale = parseFloat(document.getElementById('totale').value);
     if(!totale){
         alert('Inserisci un totale valido.');
@@ -126,6 +113,7 @@ function inviaMance(){
 
     document.getElementById('messaggio').value = messaggio;
 
+    // Apri WhatsApp per tutti i numeri (ogni numero in una scheda separata)
     persone.forEach(p=>{
         const url = `https://wa.me/${p.numero}?text=${encodeURIComponent(messaggio)}`;
         window.open(url,'_blank');
